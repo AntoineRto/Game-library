@@ -1,0 +1,26 @@
+.navbar {
+    background-color: #1c1c1c; /* Couleur de fond sombre */
+}
+.navbar-brand {
+    color: white;
+    font-weight: bold;
+}
+.navbar-brand:hover {
+    color: #f8f9fa; /* Légère surbrillance au survol */
+}
+.nav-link {
+    color: white;
+}
+.nav-link:hover {
+    color: #f8f9fa; /* Couleur blanche au survol */
+}
+.search-bar {
+    background-color: #333; /* Couleur sombre pour le champ de recherche */
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding-left: 10px;
+}
+.search-bar::placeholder {
+    color: #ccc; /* Placeholder gris clair */
+}
