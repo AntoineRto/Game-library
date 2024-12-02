@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>Bibliothèque de jeux</h1>
-    <p>Explorez et gérez vos jeux préférés.</p>
+    <p>Liste de jeux en cartes php.</p>
     
    
 </body>

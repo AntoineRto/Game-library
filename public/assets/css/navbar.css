@@ -1,5 +1,10 @@
 .navbar {
     background-color: #1c1c1c; /* Couleur de fond sombre */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
 }
 .navbar-brand {
     color: white;
