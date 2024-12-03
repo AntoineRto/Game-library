@@ -1,31 +1,61 @@
+/* Navbar principale */
 .navbar {
-    background-color: #1c1c1c; /* Couleur de fond sombre */
-    position: fixed;
+    background-color: #1c1c1c; /* Fond sombre */
+    position: fixed; /* Navbar fixée en haut */
     top: 0;
     left: 0;
-    width: 100%;
-    z-index: 10;
+    width: 100%; /* Pleine largeur */
+    z-index: 10; /* Priorité sur tous les autres éléments */
+    height: 56px; /* Hauteur standard */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Légère ombre */
 }
-.navbar-brand {
-    color: white;
-    font-weight: bold;
+
+/* Logo */
+.navbar-brand img {
+    height: 40px; /* Taille ajustée au style de la navbar */
+    width: auto;
 }
-.navbar-brand:hover {
-    color: #f8f9fa; /* Légère surbrillance au survol */
-}
-.nav-link {
-    color: white;
-}
-.nav-link:hover {
-    color: #f8f9fa; /* Couleur blanche au survol */
-}
+
+/* Barre de recherche */
 .search-bar {
-    background-color: #333; /* Couleur sombre pour le champ de recherche */
+    background-color: #333; /* Fond sombre */
     border: none;
     border-radius: 20px;
     color: white;
     padding-left: 10px;
+    height: 30px; /* Ajustement pour correspondre à la hauteur */
 }
+
 .search-bar::placeholder {
     color: #ccc; /* Placeholder gris clair */
+}
+
+/* Liens dans la navbar */
+.nav-link {
+    color: white; /* Texte blanc */
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 15px;
+    transition: color 0.3s ease; /* Transition fluide au survol */
+}
+
+.nav-link:hover {
+    color: #f8f9fa; /* Surbrillance */
+}
+
+/* Dropdown */
+.dropdown-menu {
+    background-color: #333; /* Fond sombre pour le menu déroulant */
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover {
+    color: #f8f9fa; /* Surbrillance des éléments */
+    background-color: #444; /* Fond sombre au survol */
 }

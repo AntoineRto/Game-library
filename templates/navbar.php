@@ -6,17 +6,20 @@
     <title>Navbar Example</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <!-- Navbar CSS -->
+    <link href="../public/assets/css/navbar.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href=""><img src="../public/assets/img/controllerLogo.jpg"></a>
+            <a class="navbar-brand" href="#">
+                <img src="../public/assets/img/controllerLogo.jpg" alt="Logo">
+            </a>
 
             <!-- Barre de recherche -->
             <form class="d-flex flex-grow-1 mx-3">
-                <input class="form-control search-bar" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control search-bar" type="search" placeholder="Rechercher" aria-label="Search">
             </form>
 
             <!-- Liens à droite -->
