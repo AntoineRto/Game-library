@@ -21,7 +21,6 @@
             <div class="mb-3">
             <label for="email" class="form-label">Adresse Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
-            <div id="emailHelp" class="form-text">Votre email restera confidentiel.</div>
             </div>
             <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
@@ -35,6 +34,10 @@
         </form>
         </div>
     </div>
+
+        <?php if (isset($_GET['error'])): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+        <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

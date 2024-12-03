@@ -13,11 +13,18 @@ try {
         throw new Exception("Les mots de passe ne correspondent pas.");
     }
 
+    // Vérifier si le nom d'utilisateur existe déjà
+    $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE username = :username");
+    $stmt->execute([':username' => $username]);
+    if ($stmt->fetch()) {
+        throw new Exception("Le nom d'utilisateur est déjà utilisé.");
+    }
+
     // Vérifier si l'email existe déjà
     $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
     $stmt->execute([':email' => $email]);
     if ($stmt->fetch()) {
-        throw new Exception("Cet email est déjà utilisé.");
+        throw new Exception("L'email est déjà utilisé.");
     }
 
     // Hacher le mot de passe
@@ -32,10 +39,13 @@ try {
     ]);
 
     // Redirection après succès
-    header("Location: /game-library/public/login.php");
+    header("Location: /game-library/public/login");
     exit;
 
 } catch (Exception $e) {
-    // En cas d'erreur, afficher un message et ne pas rediriger vers la page d'erreur
-    echo "Erreur : " . $e->getMessage();
+    // Rediriger vers le formulaire avec un message d'erreur
+    $error_message = urlencode($e->getMessage());
+    header("Location: /game-library/public/register?error=$error_message");
+    exit;
 }
+

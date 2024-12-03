@@ -15,10 +15,10 @@ $router = new Router();
 $router->add('/', 'HomeController', 'index');
 
 //Route pour login
-$router->add('/login.php', 'LoginController', 'showLogin');
+$router->add('/login', 'LoginController', 'showLogin');
 
 //Route pour register
-$router->add('/register.php', 'RegisterController', 'showRegister');
+$router->add('/register', 'RegisterController', 'showRegister');
 
 
 // Obtenir l'URL demandée et ajuster
