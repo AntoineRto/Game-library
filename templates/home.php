@@ -18,4 +18,10 @@
 </html>
 
 
+<?php require_once __DIR__ . '/../config/db.php';
+echo "Connexion!!"
+?> <!-- Test de connexion -->
+
+
+
 <?php include 'footer.php'; ?> <!-- Inclure le pied de page -->

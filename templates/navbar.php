@@ -21,8 +21,8 @@
 
             <!-- Liens à droite -->
             <div class="d-flex align-items-center">
-                <a class="nav-link me-3" href="#">Log In</a>
-                <a class="nav-link me-3" href="#">Sign Up</a>
+                <a class="nav-link me-3" href="/game-library/public/login">Log In</a>
+                <a class="nav-link me-3" href="/game-library/public/register">Sign Up</a>
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         More
