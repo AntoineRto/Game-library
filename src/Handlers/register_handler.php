@@ -1,30 +1,29 @@
-<?php 
-
+<?php
 require_once '../../config/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // récupérer les données du formulaire
-    $username = htmlspecialchars($_POST['username']); // Nettoyer les entrées pour éviter les failles XSS
+try {
+    // Récupérer les données du formulaire
+    $username = htmlspecialchars($_POST['username']);
     $email = htmlspecialchars($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // sert à confirmer le mdp
+    // Vérification des mots de passe
     if ($password !== $confirm_password) {
-        die("Les mots de passe ne correspondent pas.");
+        throw new Exception("Les mots de passe ne correspondent pas.");
     }
 
-    // vérifier mail existe
+    // Vérifier si l'email existe déjà
     $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
     $stmt->execute([':email' => $email]);
     if ($stmt->fetch()) {
-        die("Cet email est déjà utilisé.");
+        throw new Exception("Cet email est déjà utilisé.");
     }
 
-    // crypter le mot de passe
+    // Hacher le mot de passe
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-    // insérer l'utilisateur dans la base
+    // Insérer dans la base de données
     $stmt = $pdo->prepare("INSERT INTO utilisateur (username, email, password) VALUES (:username, :email, :password)");
     $stmt->execute([
         ':username' => $username,
@@ -32,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':password' => $password_hash
     ]);
 
-    echo "Inscription réussie ! Vous pouvez maintenant vous connecter.";
+    // Redirection après succès
+    header("Location: /game-library/public/login.php");
+    exit;
+
+} catch (Exception $e) {
+    // En cas d'erreur, afficher un message et ne pas rediriger vers la page d'erreur
+    echo "Erreur : " . $e->getMessage();
 }
-
-//
-header('location: /game-library/public/login.php');
-exit;
-
-?>
