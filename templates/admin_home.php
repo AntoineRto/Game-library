@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>CETTE PAGE EST CENSEE ETRE OBSOLETE</h1>
+    <h1>CECI EST UNE PAGE POUR LES ADMINS</h1>
 </body>
 </html>

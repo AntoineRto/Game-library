@@ -31,11 +31,12 @@ try {
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
     // Insérer dans la base de données
-    $stmt = $pdo->prepare("INSERT INTO utilisateur (username, email, password) VALUES (:username, :email, :password)");
+    $stmt = $pdo->prepare("INSERT INTO utilisateur (username, email, password, registration_date, roles) VALUES (:username, :email, :password, CURDATE(), :roles)");
     $stmt->execute([
         ':username' => $username,
         ':email' => $email,
-        ':password' => $password_hash
+        ':password' => $password_hash,
+        ':roles' => 2
     ]);
 
     // Redirection après succès

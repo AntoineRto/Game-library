@@ -26,6 +26,7 @@ try {
     // Stocker les informations de l'utilisateur dans la session
     $_SESSION['user_id'] = $user['Id_user'];
     $_SESSION['username'] = $user['username'];
+    $_SESSION['role'] = $user['roles']; // MODIFICATION : Ajout du rôle
 
     // Rediriger vers la page d'accueil après connexion réussie
     header("Location: /game-library/public/");
