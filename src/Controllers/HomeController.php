@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 class HomeController {
     public function index() {
-        session_start(); // Démarre ou récupère la session active
+        
 
         $role = $_SESSION['role'] ?? 1; // Guest par défaut
 
