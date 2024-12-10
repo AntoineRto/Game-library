@@ -1,6 +1,6 @@
 <header>
     <!-- Lien vers le fichier CSS dédié -->
-    <link href="../public/assets/css/home.css" rel="stylesheet">
+    <link href="../public/assets/css/header.css" rel="stylesheet">
 
     <!-- Image de bienvenue -->
     <div class="header-banner">

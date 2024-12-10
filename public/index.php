@@ -7,6 +7,8 @@ require_once '../src/Router.php';
 require_once '../src/Controllers/HomeController.php';
 require_once '../src/Controllers/LoginController.php';
 require_once '../src/Controllers/RegisterController.php';
+require_once '../src/Controllers/LogoutController.php';
+
 
 use App\Router;
 
@@ -27,6 +29,10 @@ $router->add('/login', 'LoginController', 'showLogin');
 
 // Route pour register
 $router->add('/register', 'RegisterController', 'showRegister');
+
+//Route pour déconnecter
+$router->add('/logout', 'LogOutController', 'logOut');
+
 
 // Obtenir l'URL demandée et ajuster
 $path = str_replace('/game-library/public', '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));

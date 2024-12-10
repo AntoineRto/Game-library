@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>PAGE ERREUR</h1>
+    <p>Si cette page s'affiche, c'est que tu retombes sur la page erreur défini par ton routeur</p>
 </body>
 </html>

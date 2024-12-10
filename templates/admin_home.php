@@ -6,6 +6,14 @@
     <title>Document</title>
 </head>
 <body>
+    <?php include 'navbar.php'; ?>
     <h1>CECI EST UNE PAGE POUR LES ADMINS</h1>
+    <p>CECI EST UNNE PAGE POUR LES ADMINS</p>
+    <p>CECI EST UNNE PAGE POUR LES ADMINS</p>
+    <p>CECI EST UNNE PAGE POUR LES ADMINS</p>
+    <p>CECI EST UNNE PAGE POUR LES ADMINS</p>
+    <p>CECI EST UNNE PAGE POUR LES ADMINS</p>
+    <p>CECI EST UNNE PAGE POUR LES ADMINS</p>
+    
 </body>
 </html>
