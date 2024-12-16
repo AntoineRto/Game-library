@@ -50,7 +50,7 @@ $jeux = $stmt->fetchAll();
             <div class="col-md-4">
                 <div class="card mb-4">
                     <!-- Afficher l'image ou une image par défaut -->
-                    <img src="<?= htmlspecialchars($jeu['url'] ?? '/assets/img/default.jpg') ?>" 
+                    <img src="<?= htmlspecialchars($jeu['url'] ?? '../public/assets/img/default.jpg') ?>" 
                          class="card-img-top" 
                          alt="<?= htmlspecialchars($jeu['title']) ?>">
                     <div class="card-body">
