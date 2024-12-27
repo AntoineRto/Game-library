@@ -24,10 +24,13 @@
 
         <!-- Liens à droite -->
         <div class="d-flex align-items-center">
+            <!-- Bouton Accueil (visible pour tous) -->
+            <a class="nav-link me-3" href="/game-library/public/">Accueil</a>
+            
             <?php if (isset($_SESSION['user_id'])): ?>
                 <!-- Liens pour les utilisateurs connectés -->
                 <?php if ($_SESSION['role'] >= 3): ?>
-                    <!-- Administrateur : Afficher "Ajouter un jeu" et "Profil" -->
+                    <!-- Administrateur : Afficher "Ajouter un jeu" -->
                     <a class="nav-link me-3" href="#">Ajouter un jeu</a>
                 <?php endif; ?>
                 
@@ -46,6 +49,7 @@
         </div>
     </div>
 </nav>
+
 
 <!-- Bootstrap JS (pour dropdown) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

@@ -31,7 +31,13 @@
             <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
             </div>
             <button type="submit" class="btn btn-primary">S'inscrire</button>
+            <div class="text-center mt-4">
+                <p>Déjà un compte?</p>
+                <a href="/game-library/public/login" class="btn btn-secondary">Se connecter</a>
+            </div>        
+        
         </form>
+
         </div>
     </div>
 

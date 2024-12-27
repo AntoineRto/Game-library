@@ -2,3 +2,49 @@ body {
     background-color: #121212;
     color: #ffffff;
 }
+
+/* Espacement entre les colonnes */
+.row.g-4 {
+    gap: 20px; /* Ajoute un espacement vertical et horizontal */
+}
+
+/* Style des cartes */
+.card {
+    height: 100%; /* Adapte la carte à la colonne */
+    overflow: hidden; /* Cache le contenu défilant */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Nécessaire pour gérer le z-index */
+    z-index: 1; /* Priorité par défaut */
+}
+
+.card:hover {
+    transform: scale(1.1); /* Agrandissement au survol */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Ombre plus marquée */
+    z-index: 10; /* La carte passe au-dessus des autres */
+}
+
+/* Description coupée par défaut */
+.card-body .description {
+    white-space: nowrap; /* Texte sur une seule ligne */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Points de suspension pour le texte tronqué */
+    max-height: 20px; /* Hauteur limitée */
+    transition: max-height 0.3s ease, white-space 0.3s ease;
+}
+
+/* Affiche toute la description au survol */
+.card:hover .description {
+    white-space: normal; /* Texte multiligne */
+    max-height: 200px; /* Affiche plus de texte */
+    transition: max-height 0.3s ease, white-space 0.3s ease;
+}
+
+/* Bouton en bas de la carte */
+.card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto; /* Aligne le bouton en bas */
+}

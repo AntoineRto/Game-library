@@ -15,14 +15,8 @@ use App\Router;
 // Créer une instance du routeur
 $router = new Router();
 
-// Route pour l'accueil par défaut (redirection selon le rôle)
+// Route pour l'accueil par défaut 
 $router->add('/', 'HomeController', 'index');
-
-// Route pour user (niveau 2)
-$router->add('/user_home', 'HomeController', 'showUserHome');
-
-// Route pour admin (niveau 3)
-$router->add('/admin_home', 'HomeController', 'showAdminHome');
 
 // Route pour login
 $router->add('/login', 'LoginController', 'showLogin');
