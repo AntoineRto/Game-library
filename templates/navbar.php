@@ -38,6 +38,11 @@
                     <!-- Utilisateur : Afficher "Profil" -->
                     <a class="nav-link me-3" href="#">Profil</a>
                 <?php endif; ?>
+
+                <?php if ($_SESSION['role'] >= 2): ?>
+                    <!-- Utilisateur : Afficher "Profil" -->
+                    <a class="nav-link me-3" href="#">Collection</a>
+                <?php endif; ?>
                 
                 <!-- Bouton Déconnexion -->
                 <a class="nav-link me-3" href="/game-library/public/logout">Déconnexion</a>

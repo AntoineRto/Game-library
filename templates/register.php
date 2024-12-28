@@ -32,7 +32,7 @@
             </div>
             <button type="submit" class="btn btn-primary">S'inscrire</button>
             <div class="text-center mt-4">
-                <p>Déjà un compte?</p>
+                <p>Vous avez déjà un compte?</p>
                 <a href="/game-library/public/login" class="btn btn-secondary">Se connecter</a>
             </div>        
         
