@@ -1,7 +1,6 @@
 <?php
 // Inclure la configuration de la base de données
 require_once '../config/db.php';
-session_start();
 
 // Vérifier si un ID de jeu est fourni
 if (!isset($_GET['id']) || empty($_GET['id'])) {
@@ -59,3 +58,4 @@ if (!$jeu) {
     <?php include 'footer.php'; ?>
 </body>
 </html>
+
