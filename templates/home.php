@@ -58,7 +58,7 @@ $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <!-- Pied de la carte avec les boutons -->
                         <div class="card-footer">
                             <!-- Bouton "Voir plus" pour accéder aux détails du jeu -->
-                            <a href="/game-library/public/jeu_details.php?id=<?= $jeu['Id_jeu'] ?>" class="btn btn-secondary">Voir plus</a>
+                            <a href="/game-library/public/templates/game-details?id=<?= $jeu['Id_jeu'] ?>" class="btn btn-secondary">Voir plus</a>
                             <!-- Bouton "Ajouter à la collection" ou "Connectez-vous" selon l'état de connexion -->
                             <button class="btn btn-primary">
                                 <?= isset($_SESSION['user_id']) ? 'Ajouter à la collection' : 'Connectez-vous pour ajouter à votre collection!' ?>

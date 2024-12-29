@@ -8,6 +8,7 @@ require_once '../src/Controllers/HomeController.php';
 require_once '../src/Controllers/LoginController.php';
 require_once '../src/Controllers/RegisterController.php';
 require_once '../src/Controllers/LogoutController.php';
+require_once '../src/Controllers/GameController.php';
 
 
 use App\Router;
@@ -26,6 +27,10 @@ $router->add('/register', 'RegisterController', 'showRegister');
 
 //Route pour déconnecter
 $router->add('/logout', 'LogOutController', 'logOut');
+
+//Route pour infos jeux
+$router->add('/game-details', 'GameController', 'showDetails');
+
 
 
 // Obtenir l'URL demandée et ajuster
