@@ -31,17 +31,17 @@
                 <!-- Liens pour les utilisateurs connectés -->
                 <?php if ($_SESSION['role'] >= 3): ?>
                     <!-- Administrateur : Afficher "Ajouter un jeu" -->
-                    <a class="nav-link me-3" href="#">Ajouter un jeu</a>
+                    <a class="nav-link me-3" href="/game-library/public/add-game">Ajouter un jeu</a>
                 <?php endif; ?>
                 
                 <?php if ($_SESSION['role'] >= 2): ?>
                     <!-- Utilisateur : Afficher "Profil" -->
-                    <a class="nav-link me-3" href="#">Profil</a>
+                    <a class="nav-link me-3" href="/game-library/public/profile">Profil</a>
                 <?php endif; ?>
 
                 <?php if ($_SESSION['role'] >= 2): ?>
-                    <!-- Utilisateur : Afficher "Profil" -->
-                    <a class="nav-link me-3" href="#">Collection</a>
+                    <!-- Utilisateur : Afficher "Collection" -->
+                    <a class="nav-link me-3" href="/game-library/public/collection">Collection</a>
                 <?php endif; ?>
                 
                 <!-- Bouton Déconnexion -->
