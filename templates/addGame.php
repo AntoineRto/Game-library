@@ -11,7 +11,7 @@
 
     <div class="container mt-5">
         <h1 class="text-light">Ajouter un jeu</h1>
-        <form action="/game-library/public/add-game-submit" method="POST">
+        <form action="/game-library/public/add-game-submit" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label text-light">Titre du jeu</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -28,23 +28,10 @@
             </div>
 
             <div class="mb-3">
-                <label for="genre" class="form-label text-light">Genres</label>
-                <select class="form-control" id="genre" name="genre[]" multiple>
-                    <!-- Charger les genres depuis la BDD -->
-                    <?php
-                    require_once '../config/db.php';
-                    $stmt = $pdo->query("SELECT id_genre, name FROM genre");
-                    while ($row = $stmt->fetch()) {
-                        echo "<option value='{$row['id_genre']}'>{$row['name']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
-            <div class="mb-3">
                 <label for="platform" class="form-label text-light">Plateformes</label>
                 <select class="form-control" id="platform" name="platform[]" multiple>
                     <?php
+                    require_once '../config/db.php';
                     $stmt = $pdo->query("SELECT id_platform, name FROM platform");
                     while ($row = $stmt->fetch()) {
                         echo "<option value='{$row['id_platform']}'>{$row['name']}</option>";
@@ -63,6 +50,11 @@
                     }
                     ?>
                 </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label text-light">Image du jeu</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Ajouter</button>

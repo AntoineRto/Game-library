@@ -50,87 +50,43 @@ h1 {
     border-bottom: 1px solid #333; /* Séparation discrète */
 }
 
-/* Corps de la carte */
-.game-card .card-body {
-    padding: 15px;
+/* Boutons Modifier et Supprimer */
+.image-container {
+    position: relative;
 }
 
-/* Description avec effet de déploiement */
-.game-card .description {
-    max-height: 50px; /* Limiter la hauteur */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #b0b0b0; /* Texte gris clair */
-    transition: max-height 0.3s ease;
-}
-
-.game-card .description:hover {
-    max-height: 150px; /* Déplier au survol */
-    white-space: normal;
-    overflow: visible;
-}
-
-/* Pied de la carte */
-.game-card .card-footer {
-    background-color: #1e1e1e; /* Fond assorti à la carte */
-    padding: 10px;
-    border-top: 1px solid #333; /* Séparation discrète */
+.edit-btn, .delete-btn {
+    position: absolute;
+    top: 10px; /* Décalage depuis le haut */
+    width: 30px;
+    height: 30px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+    border: none;
+    border-radius: 50%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+    cursor: pointer;
 }
 
-/* Fichier CSS pour le style des cartes dans une interface sobre */
-
-/* Fond général de la page */
-body {
-    background-color: #121212; /* Fond noir doux */
-    color: #e0e0e0; /* Texte gris clair */
-    font-family: 'Arial', sans-serif; /* Police simple et lisible */
-    margin: 0;
-    padding: 0;
+/* Bouton Modifier */
+.edit-btn {
+    left: 10px; /* Décalage depuis la gauche */
 }
 
-/* Conteneur principal */
-.container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
+/* Bouton Supprimer */
+.delete-btn {
+    right: 10px; /* Décalage depuis la droite */
 }
 
-/* Titres */
-h1 {
-    color: #ffffff; /* Texte blanc pour le titre */
-    margin-bottom: 20px;
-}
-
-/* Cartes */
-.game-card {
-    background-color: #1e1e1e; /* Fond légèrement plus clair que le body */
-    border: 1px solid #333; /* Bordure discrète */
-    border-radius: 8px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    height: 100%; /* Uniformiser la hauteur */
-}
-
-/* Mise en avant de la carte au survol */
-.game-card:hover {
-    transform: scale(1.03); /* Légère mise en avant */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Ombre plus marquée */
-}
-
-/* Image du jeu */
-.game-card img {
-    object-fit: cover;
-    height: 200px;
-    width: 100%;
-    border-bottom: 1px solid #333; /* Séparation discrète */
+/* Effet au survol */
+.edit-btn:hover, .delete-btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
 }
 
 /* Corps de la carte */

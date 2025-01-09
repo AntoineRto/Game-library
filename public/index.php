@@ -11,6 +11,7 @@ require_once '../src/Controllers/LogoutController.php';
 require_once '../src/Controllers/GameController.php';
 require_once '../src/Controllers/ProfileController.php';
 require_once '../src/Controllers/CollectionController.php';
+require_once '../src/Controllers/ReviewController.php';
 
 
 use App\Router;
@@ -39,15 +40,21 @@ $router->add('/logout', 'LogOutController', 'logOut');
 //Route pour infos jeux
 $router->add('/game-details', 'GameController', 'showDetails');
 
-//Route pour ajouter un jeu seulement disponible en admin
+//Routes relatives aux jeux seulement disponible en admin
 $router->add('/add-game', 'GameController', 'showAddGameForm');
 $router->add('/add-game-submit', 'GameController', 'submitAddGame');
+$router->add('/edit-game', 'GameController', 'showEditGameForm');
+$router->add('/edit-game-submit', 'GameController', 'submitEditGame');
+$router->add('/delete-game', 'GameController', 'deleteGame');
+
 
 //Routes relatives à la collection
 $router->add('/collection', 'CollectionController', 'showCollection');
 $router->add('/update-status', 'CollectionController', 'updateGameStatus');
 $router->add('/remove-game', 'CollectionController', 'removeGameFromCollection');
 
+//Route pour review
+$router->add('/add-review', 'ReviewController', 'addReview');
 
 
 // Obtenir l'URL demandée et ajuster
