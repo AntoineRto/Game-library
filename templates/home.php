@@ -78,9 +78,14 @@ $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <!-- Bouton "Voir plus" pour accéder aux détails du jeu -->
                         <a href="/game-library/public/game-details?id=<?= $jeu['Id_jeu'] ?>" class="btn btn-secondary">Voir plus</a>
                         <!-- Bouton "Ajouter à la collection" ou "Connectez-vous" selon l'état de connexion -->
-                        <button class="btn btn-primary">
-                            <?= isset($_SESSION['user_id']) ? 'Ajouter ce jeu à votre collection' : 'Connectez-vous pour ajouter ce jeu à votre collection!' ?>
-                        </button>
+                        <form action="/game-library/public/add-to-collection" method="POST" class="d-inline">
+                            <input type="hidden" name="id_jeu" value="<?= htmlspecialchars($jeu['Id_jeu']) ?>">
+                            <button type="submit" class="btn btn-primary">
+                                <?= isset($_SESSION['user_id']) ? 'Ajouter ce jeu à votre collection' : 'Connectez-vous pour ajouter ce jeu à votre collection!' ?>
+                            </button>
+                        </form>
+
+
                     </div>
                 </div>
             </div>

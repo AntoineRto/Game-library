@@ -1,78 +1,103 @@
 <?php
 namespace App\Controllers;
 
-use PDO;
-
 class CollectionController {
     public function showCollection() {
+        require_once '../config/db.php';
+        
+
         if (!isset($_SESSION['user_id'])) {
             header("Location: /game-library/public/login");
             exit;
         }
 
-        require_once '../config/db.php';
         $user_id = $_SESSION['user_id'];
 
-        // Récupérer les jeux de la collection de l'utilisateur
         $stmt = $pdo->prepare("
-            SELECT jeu.id_jeu, jeu.title, jeu.description, jeu.release_date, collection.status, collection.personal_note, collection.time_played, collection.priority
-            FROM collection
-            JOIN jeu ON collection.id_jeu = jeu.id_jeu
-            WHERE collection.id_user = :user_id
-            ORDER BY collection.status, collection.priority DESC, collection.added_at ASC
-        ");
-        $stmt->execute(['user_id' => $user_id]);
-        $games = $stmt->fetchAll();
+        SELECT collection.*, jeu.title, jeu.description, jeu.release_date,
+               GROUP_CONCAT(DISTINCT img.url) AS images, status.name AS status_name
+        FROM collection
+        JOIN jeu ON collection.id_jeu = jeu.Id_jeu
+        LEFT JOIN Asso_8 ON jeu.Id_jeu = Asso_8.Id_jeu
+        LEFT JOIN img ON Asso_8.Id_img = img.Id_img
+        JOIN status ON collection.id_status = status.Id_status
+        WHERE collection.id_user = :id_user
+        GROUP BY collection.id_collection
+    ");
+    $stmt->execute(['id_user' => $_SESSION['user_id']]);
+    $collection = $stmt->fetchAll();
+    
 
         include '../templates/collection.php';
     }
 
-    public function updateGameStatus() {
+    public function addToCollection() {
+        
+    
+        // Vérifier si l'utilisateur est connecté
         if (!isset($_SESSION['user_id'])) {
             header("Location: /game-library/public/login");
             exit;
         }
-
+    
         require_once '../config/db.php';
-        $user_id = $_SESSION['user_id'];
-        $jeu_id = intval($_POST['id_jeu']);
-        $status = htmlspecialchars($_POST['status']);
-
-        // Mettre à jour le statut du jeu dans la collection
-        $stmt = $pdo->prepare("
-            UPDATE collection
-            SET status = :status
-            WHERE id_user = :user_id AND id_jeu = :id_jeu
-        ");
-        $stmt->execute([
-            'status' => $status,
-            'user_id' => $user_id,
-            'id_jeu' => $jeu_id
-        ]);
-
-        header("Location: /game-library/public/collection");
-        exit;
+    
+        try {
+            $id_user = $_SESSION['user_id'];
+            $id_jeu = intval($_POST['id_jeu']);
+    
+            // Vérifier si le jeu est déjà dans la collection
+            $stmt = $pdo->prepare("SELECT * FROM collection WHERE id_user = :id_user AND id_jeu = :id_jeu");
+            $stmt->execute(['id_user' => $id_user, 'id_jeu' => $id_jeu]);
+            $existing = $stmt->fetch();
+    
+            if ($existing) {
+                // Si le jeu est déjà dans la collection, retournez avec un message
+                $_SESSION['message'] = "Ce jeu est déjà dans votre collection.";
+                header("Location: /game-library/public/home.php");
+                exit;
+            }
+    
+            // Récupérer l'ID du statut "à faire" depuis la table status
+            $stmt = $pdo->prepare("SELECT Id_status FROM status WHERE name = 'à faire'");
+            $stmt->execute();
+            $status = $stmt->fetch();
+    
+            if (!$status) {
+                throw new Exception("Le statut 'à faire' est introuvable dans la table status.");
+            }
+    
+            $id_status = $status['Id_status'];
+    
+            // Ajouter le jeu à la collection avec le statut "à faire"
+            $stmt = $pdo->prepare("
+                INSERT INTO collection (id_user, id_jeu, added_at, id_status)
+                VALUES (:id_user, :id_jeu, NOW(), :id_status)
+            ");
+            $stmt->execute(['id_user' => $id_user, 'id_jeu' => $id_jeu, 'id_status' => $id_status]);
+    
+            $_SESSION['message'] = "Le jeu a été ajouté à votre collection avec succès.";
+            header("Location: /game-library/public/home.php");
+            exit;
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'ajout du jeu à la collection : " . $e->getMessage();
+            exit;
+        }
     }
+    
 
-    public function removeGameFromCollection() {
+    public function deleteFromCollection() {
+        require_once '../config/db.php';
+        
+
         if (!isset($_SESSION['user_id'])) {
             header("Location: /game-library/public/login");
             exit;
         }
 
-        require_once '../config/db.php';
-        $user_id = $_SESSION['user_id'];
-        $jeu_id = intval($_POST['id_jeu']);
-
-        // Supprimer un jeu de la collection
-        $stmt = $pdo->prepare("
-            DELETE FROM collection
-            WHERE id_user = :user_id AND id_jeu = :id_jeu
-        ");
-        $stmt->execute([
-            'user_id' => $user_id,
-            'id_jeu' => $jeu_id
-        ]);
+        $id_collection = intval($_POST['id_collection']);
+        $stmt = $pdo->prepare("DELETE FROM collection WHERE id_collection = :id_collection");
+        $stmt->execute(['id_collection' => $id_collection]);
 
         header("Location: /game-library/public/collection");
         exit;

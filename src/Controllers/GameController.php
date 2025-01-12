@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 class GameController {
@@ -12,7 +13,7 @@ class GameController {
             header("Location: /game-library/public/home.php");
             exit;
         }
-    
+        //Inclure le fichier addgame.php
         include '../templates/addGame.php';
     }
     

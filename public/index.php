@@ -14,6 +14,7 @@ require_once '../src/Controllers/CollectionController.php';
 require_once '../src/Controllers/ReviewController.php';
 
 
+
 use App\Router;
 
 // Créer une instance du routeur
@@ -50,8 +51,9 @@ $router->add('/delete-game', 'GameController', 'deleteGame');
 
 //Routes relatives à la collection
 $router->add('/collection', 'CollectionController', 'showCollection');
-$router->add('/update-status', 'CollectionController', 'updateGameStatus');
-$router->add('/remove-game', 'CollectionController', 'removeGameFromCollection');
+$router->add('/add-to-collection', 'CollectionController', 'addToCollection');
+$router->add('/update-collection', 'CollectionController', 'updateCollection');
+$router->add('/delete-from-collection', 'CollectionController', 'deleteFromCollection');
 
 //Route pour review
 $router->add('/add-review', 'ReviewController', 'addReview');
