@@ -7,20 +7,17 @@
 $stmt = $pdo->query("
     SELECT jeu.Id_jeu, jeu.title, jeu.description, jeu.release_date, img.url,
            GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags,
-           
            GROUP_CONCAT(DISTINCT platform.name SEPARATOR ', ') AS platforms
     FROM jeu
     LEFT JOIN Asso_8 ON jeu.Id_jeu = Asso_8.Id_jeu
     LEFT JOIN img ON Asso_8.Id_img = img.Id_img
     LEFT JOIN Asso_5 ON jeu.Id_jeu = Asso_5.Id_jeu
     LEFT JOIN tags ON Asso_5.Id_tags = tags.Id_tags
-    LEFT JOIN Asso_3 ON jeu.Id_jeu = Asso_3.Id_jeu
-    
     LEFT JOIN Asso_2 ON jeu.Id_jeu = Asso_2.Id_jeu
     LEFT JOIN platform ON Asso_2.Id_platform = platform.Id_platform
     GROUP BY jeu.Id_jeu
 ");
-$jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$jeux = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -42,9 +39,10 @@ $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="game-card">
                     <div class="image-container">
                         <!-- Image du jeu -->
-                        <img src="<?= htmlspecialchars($jeu['url'] ?? '../public/assets/img/default.jpg') ?>" 
-                             class="card-img-top" 
-                             alt="<?= htmlspecialchars($jeu['title']) ?>">
+                        <img src="<?= htmlspecialchars($jeu['image_url'] ?? '../public/assets/img/default.jpg') ?>" 
+                            class="card-img-top" 
+                            alt="<?= htmlspecialchars($jeu['title']) ?>">
+
                         
                         <!-- Boutons Modifier et Supprimer (administrateur uniquement) -->
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] >= 3): ?>

@@ -57,6 +57,7 @@
                 <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
             </div>
 
+
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>

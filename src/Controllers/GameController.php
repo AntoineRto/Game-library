@@ -17,22 +17,44 @@ class GameController {
         include '../templates/addGame.php';
     }
     
+    //Fonction pour ajouter un jeu
     public function submitAddGame() {
         if (!isset($_SESSION['role']) || $_SESSION['role'] < 3) {
-            header("Location: /game-library/public/home.php");
+            header("Location: /game-library/public/");
             exit;
         }
-
+    
         require_once '../config/db.php';
     
         try {
+            //Récupérer les données
             $title = htmlspecialchars($_POST['title']);
             $release_date = $_POST['release_date'];
             $description = htmlspecialchars($_POST['description']);
-            $platform = $_POST['platform']; // Array of platform IDs
-            $tags = $_POST['tags']; // Array of tag IDs
+            $tags = $_POST['tags']; // IDs des tags
+            $platform = $_POST['platform']; // IDs des plateformes
     
-            // Ajouter le jeu
+            //Gérer l'image
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $imageTmpName = $_FILES['image']['tmp_name'];
+                $imageName = basename($_FILES['image']['name']);
+                $imagePath = __DIR__ . "/../../public/uploads/" . $imageName;
+
+    
+                //Déplace le fichier téléchargé
+                if (!move_uploaded_file($imageTmpName, $imagePath)) {
+                    throw new Exception("Erreur lors de l'upload de l'image.");
+                }
+    
+                //Enregistrer l'image dans la table img
+                $stmtImg = $pdo->prepare("INSERT INTO img (url) VALUES (:url)");
+                $stmtImg->execute(['url' => $imagePath]);
+                $imageId = $pdo->lastInsertId();
+            } else {
+                throw new Exception("Aucune image n'a été téléchargée ou une erreur est survenue.");
+            }
+    
+            //Ajouter le jeu
             $stmt = $pdo->prepare("INSERT INTO jeu (title, release_date, description) VALUES (:title, :release_date, :description)");
             $stmt->execute([
                 'title' => $title,
@@ -40,52 +62,35 @@ class GameController {
                 'description' => $description,
             ]);
     
-            $game_id = $pdo->lastInsertId();
+            $gameId = $pdo->lastInsertId();
     
-            // Ajouter les plateformes associées
-            foreach ($platform as $platform_id) {
-                $stmt = $pdo->prepare("INSERT INTO Asso_2 (id_jeu, id_platform) VALUES (:id_jeu, :id_platform)");
-                $stmt->execute(['id_jeu' => $game_id, 'id_platform' => $platform_id]);
-            }
+            // Associer le jeu à son image
+            $stmtAssocImg = $pdo->prepare("INSERT INTO Asso_8 (Id_jeu, Id_img) VALUES (:Id_jeu, :Id_img)");
+            $stmtAssocImg->execute(['Id_jeu' => $gameId, 'Id_img' => $imageId]);
     
             // Ajouter les tags associés
             foreach ($tags as $tag_id) {
-                $stmt = $pdo->prepare("INSERT INTO Asso_5 (id_jeu, id_tags) VALUES (:id_jeu, :id_tags)");
-                $stmt->execute(['id_jeu' => $game_id, 'id_tags' => $tag_id]);
+                $stmtTag = $pdo->prepare("INSERT INTO Asso_5 (Id_jeu, Id_tags) VALUES (:Id_jeu, :Id_tags)");
+                $stmtTag->execute(['Id_jeu' => $gameId, 'Id_tags' => $tag_id]);
             }
     
-            // Gestion des images
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = '../public/assets/img/';
-                $fileName = basename($_FILES['image']['name']);
-                $targetFilePath = $uploadDir . $fileName;
-    
-                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
-                    // Ajouter l'image dans la table img
-                    $stmt = $pdo->prepare("INSERT INTO img (url) VALUES (:url)");
-                    $stmt->execute(['url' => $fileName]);
-    
-                    $img_id = $pdo->lastInsertId();
-    
-                    // Associer l'image au jeu via Asso_8
-                    $stmt = $pdo->prepare("INSERT INTO Asso_8 (id_jeu, id_img) VALUES (:id_jeu, :id_img)");
-                    $stmt->execute([
-                        'id_jeu' => $game_id,
-                        'id_img' => $img_id,
-                    ]);
-                } else {
-                    throw new Exception("Erreur lors du téléversement de l'image.");
-                }
+            // Ajouter les plateformes associées
+            foreach ($platform as $platform_id) {
+                $stmtPlatform = $pdo->prepare("INSERT INTO Asso_2 (Id_jeu, Id_platform) VALUES (:Id_jeu, :Id_platform)");
+                $stmtPlatform->execute(['Id_jeu' => $gameId, 'Id_platform' => $platform_id]);
             }
     
-            header("Location: /game-library/public/?success=game_added");
+            // Redirection après succès
+            header("Location: /game-library/public/");
             exit;
+    
         } catch (Exception $e) {
-            echo "Erreur lors de l'ajout du jeu : " . $e->getMessage();
+            echo "Erreur : " . $e->getMessage();
             exit;
         }
     }
-
+    
+    //Editer un jeu
     public function showEditGameForm() {
         if (!isset($_SESSION['role']) || $_SESSION['role'] < 3) {
             header("Location: /game-library/public/home.php");
@@ -107,6 +112,7 @@ class GameController {
         include '../templates/editGame.php';
     }
     
+    //Submit l'edition du jeu
     public function submitEditGame() {
         if (!isset($_SESSION['role']) || $_SESSION['role'] < 3) {
             header("Location: /game-library/public/");
@@ -144,7 +150,7 @@ class GameController {
                 $pdo->prepare("INSERT INTO Asso_2 (id_jeu, id_platform) VALUES (:id_jeu, :id_platform)")->execute(['id_jeu' => $id_jeu, 'id_platform' => $platform_id]);
             }
     
-            header("Location: /game-library/public/home.php?success=game_updated");
+            header("Location: /game-library/public/");
             exit;
         } catch (Exception $e) {
             echo "Erreur lors de la mise à jour du jeu : " . $e->getMessage();
@@ -152,6 +158,7 @@ class GameController {
         }
     }
     
+    //Suppression d'un jeu avec ses reviews
     public function deleteGame() {
         if (!isset($_SESSION['role']) || $_SESSION['role'] < 3) {
             header("Location: /game-library/public/home.php");
@@ -168,6 +175,16 @@ class GameController {
             $pdo->prepare("DELETE FROM asso_5 WHERE Id_jeu = :id_jeu")->execute(['id_jeu' => $id_jeu]);
             $pdo->prepare("DELETE FROM asso_2 WHERE Id_jeu = :id_jeu")->execute(['id_jeu' => $id_jeu]);
     
+            // Supprimer les relations dans la table des reviews (asso_7)
+            $pdo->prepare("DELETE FROM asso_7 WHERE Id_jeu = :id_jeu")->execute(['id_jeu' => $id_jeu]);
+    
+            // Supprimer les reviews elles-mêmes
+            $pdo->prepare("
+                DELETE reviews FROM reviews
+                INNER JOIN asso_7 ON reviews.id_reviews = asso_7.id_reviews
+                WHERE asso_7.id_jeu = :id_jeu
+            ")->execute(['id_jeu' => $id_jeu]);
+    
             // Supprimer le jeu de la table principale
             $stmt = $pdo->prepare("DELETE FROM jeu WHERE Id_jeu = :id_jeu");
             $stmt->execute(['id_jeu' => $id_jeu]);
@@ -179,6 +196,7 @@ class GameController {
             exit;
         }
     }
+    
     
     
 

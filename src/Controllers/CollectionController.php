@@ -77,7 +77,7 @@ class CollectionController {
             $stmt->execute(['id_user' => $id_user, 'id_jeu' => $id_jeu, 'id_status' => $id_status]);
     
             $_SESSION['message'] = "Le jeu a été ajouté à votre collection avec succès.";
-            header("Location: /game-library/public/home.php");
+            header("Location: /game-library/public/");
             exit;
         } catch (PDOException $e) {
             echo "Erreur lors de l'ajout du jeu à la collection : " . $e->getMessage();

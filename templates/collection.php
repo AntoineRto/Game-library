@@ -9,16 +9,28 @@
 <body>
     <?php include 'navbar.php'; ?>
 
-    <?php $stmt = $pdo->prepare("
-        SELECT collection.*, jeu.title, jeu.description, jeu.release_date, status.name AS status_name
-        FROM collection
-        JOIN jeu ON collection.id_jeu = jeu.Id_jeu
-        LEFT JOIN img ON jeu.Id_jeu = img.Id_jeu
-        JOIN status ON collection.id_status = status.Id_status
-        WHERE collection.id_user = :id_user");
+    <?php
+        require_once '../config/db.php';
+
+        $collections = [];
+        $stmt = $pdo->prepare("
+            SELECT collection.id_collection, collection.added_at, collection.personnal_note, collection.time_played, collection.favori,
+                jeu.Id_jeu, jeu.title, jeu.description, jeu.release_date,
+                img.url,
+                GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags
+            FROM collection
+            JOIN jeu ON collection.Id_jeu = jeu.Id_jeu
+            LEFT JOIN Asso_8 ON jeu.Id_jeu = Asso_8.Id_jeu
+            LEFT JOIN img ON Asso_8.Id_img = img.Id_img
+            LEFT JOIN Asso_5 ON jeu.Id_jeu = Asso_5.Id_jeu
+            LEFT JOIN tags ON Asso_5.Id_tags = tags.Id_tags
+            WHERE collection.id_user = :id_user
+            GROUP BY collection.id_collection
+        ");
         $stmt->execute(['id_user' => $_SESSION['user_id']]);
         $collection = $stmt->fetchAll();
-    ?>
+        ?>
+
 
     <div class="container mt-5">
         <h1 class="text-light">Ma Collection</h1>
