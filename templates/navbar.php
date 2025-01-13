@@ -10,6 +10,7 @@
     <link href="../public/assets/css/navbar.css" rel="stylesheet">
     <!-- Icone font awesome !-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Script de recherche !-->
 
 </head>
 <body>
@@ -20,10 +21,13 @@
             <img src="../public/assets/img/controllerLogo.jpg" alt="Logo">
         </a>
 
-        <!-- Barre de recherche -->
-        <form class="d-flex flex-grow-1 mx-3">
-            <input class="form-control search-bar" type="search" placeholder="Rechercher" aria-label="Search">
+        <form id="searchForm" action="/game-library/public/search" method="GET" class="d-flex flex-grow-1 mx-3">
+            <input id="searchInput" class="form-control me-2" type="search" name="query" placeholder="Rechercher un jeu..." aria-label="Search" required>
+            <button class="btn btn-outline-success" type="submit">Rechercher</button>
         </form>
+
+
+        
 
         <!-- Liens à droite -->
         <div class="d-flex align-items-center">

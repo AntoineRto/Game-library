@@ -5,6 +5,7 @@ session_start(); // La session est démarrée une seule fois ici
 // Inclure les fichiers nécessaires
 require_once '../src/Router.php';
 require_once '../src/Controllers/HomeController.php';
+require_once '../src/Controllers/SearchController.php';
 require_once '../src/Controllers/LoginController.php';
 require_once '../src/Controllers/RegisterController.php';
 require_once '../src/Controllers/LogoutController.php';
@@ -22,6 +23,9 @@ $router = new Router();
 
 // Route pour l'accueil par défaut 
 $router->add('/', 'HomeController', 'index');
+
+//Route pour recherche
+$router->add('/search', 'SearchController', 'performSearch');
 
 //Route pour le profil (uniquement pour les utilisateurs connectés +) 
 $router->add('/profile', 'ProfileController', 'showProfile');

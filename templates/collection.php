@@ -35,6 +35,7 @@ $collections = $stmt->fetchAll();
 
     ?>
 
+        <!--Affichage d'un message si l'action a réussi ou erreur -->
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success">
                 <?= htmlspecialchars($_SESSION['success']); ?>
@@ -67,6 +68,7 @@ $collections = $stmt->fetchAll();
                             <p class="card-text"><strong>Tags :</strong> <?= htmlspecialchars($item['tags'] ?? 'Aucun') ?></p>
                             <p class="card-text"><strong>Statut :</strong> <?= htmlspecialchars($item['status_name']) ?></p>
                         </div>
+                        <!--Update du statut du jeu -->
                         <div class="footer">    
                             <form action="/game-library/public/update-status" method="POST" class="mt-2">
                                 <input type="hidden" name="id_collection" value="<?= $item['id_collection'] ?>">
@@ -78,6 +80,12 @@ $collections = $stmt->fetchAll();
                                 </select>
                                 <button type="submit" class="btn btn-primary mt-2">Mettre à jour</button>
                             </form>
+                            <!--Suppression du jeu de la collection -->
+                            <form action="/game-library/public/delete-from-collection" method="POST" class="mt-2">
+                                <input type="hidden" name="id_collection" value="<?= htmlspecialchars($item['id_collection']) ?>">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+
                         </div>
 
                     </div>

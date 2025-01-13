@@ -84,21 +84,33 @@ class CollectionController {
     }
     
     public function deleteFromCollection() {
-        require_once '../config/db.php';
-        
-
         if (!isset($_SESSION['user_id'])) {
             header("Location: /game-library/public/login");
             exit;
         }
-
-        $id_collection = intval($_POST['id_collection']);
-        $stmt = $pdo->prepare("DELETE FROM collection WHERE id_collection = :id_collection");
-        $stmt->execute(['id_collection' => $id_collection]);
-
-        header("Location: /game-library/public/collection");
-        exit;
+    
+        require_once '../config/db.php';
+    
+        try {
+            $id_collection = intval($_POST['id_collection']);
+    
+            $stmt = $pdo->prepare("
+                DELETE FROM collection
+                WHERE id_collection = :id_collection
+            ");
+            $stmt->execute(['id_collection' => $id_collection]);
+    
+            $_SESSION['success'] = "Le jeu a été supprimé de votre collection.";
+            header("Location: /game-library/public/collection");
+            exit;
+    
+        } catch (PDOException $e) {
+            $_SESSION['error'] = "Erreur lors de la suppression : " . $e->getMessage();
+            header("Location: /game-library/public/collection");
+            exit;
+        }
     }
+    
 
 public function updateStatus() {
     if (!isset($_SESSION['user_id'])) {
