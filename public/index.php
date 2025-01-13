@@ -52,7 +52,7 @@ $router->add('/delete-game', 'GameController', 'deleteGame');
 //Routes relatives à la collection
 $router->add('/collection', 'CollectionController', 'showCollection');
 $router->add('/add-to-collection', 'CollectionController', 'addToCollection');
-$router->add('/update-collection', 'CollectionController', 'updateCollection');
+$router->add('/update-status', 'CollectionController', 'updateStatus');
 $router->add('/delete-from-collection', 'CollectionController', 'deleteFromCollection');
 
 //Route pour review

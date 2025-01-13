@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier mon profil</title>
+    <?php include 'navbar.php'; ?>
     <link rel="stylesheet" href="../public/assets/css/editProfile.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
-
+    
     <div class="container mt-5">
         <h1 class="text-light">Modifier mon profil</h1>
 

@@ -32,6 +32,22 @@ $jeux = $stmt->fetchAll();
 <body>
 <div class="container mt-5">
     <h1>Liste des jeux</h1>
+
+    <!-- Afficher les messages de succès ou d'erreur -->
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?= htmlspecialchars($_SESSION['success']); ?>
+            <?php unset($_SESSION['success']); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= htmlspecialchars($_SESSION['error']); ?>
+            <?php unset($_SESSION['error']); ?>
+        </div>
+    <?php endif; ?>
+
     <div class="row mt-4">
         <!-- Boucle pour afficher les cartes des jeux -->
         <?php foreach ($jeux as $jeu): ?>
@@ -40,10 +56,9 @@ $jeux = $stmt->fetchAll();
                     <div class="image-container">
                         <!-- Image du jeu -->
                         <img src="<?= htmlspecialchars($jeu['image_url'] ?? '../public/assets/img/default.jpg') ?>" 
-                            class="card-img-top" 
-                            alt="<?= htmlspecialchars($jeu['title']) ?>">
+                             class="card-img-top" 
+                             alt="<?= htmlspecialchars($jeu['title']) ?>">
 
-                        
                         <!-- Boutons Modifier et Supprimer (administrateur uniquement) -->
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] >= 3): ?>
                             <!-- Bouton Modifier -->
@@ -75,21 +90,25 @@ $jeux = $stmt->fetchAll();
                     <div class="card-footer">
                         <!-- Bouton "Voir plus" pour accéder aux détails du jeu -->
                         <a href="/game-library/public/game-details?id=<?= $jeu['Id_jeu'] ?>" class="btn btn-secondary">Voir plus</a>
+                        
                         <!-- Bouton "Ajouter à la collection" ou "Connectez-vous" selon l'état de connexion -->
-                        <form action="/game-library/public/add-to-collection" method="POST" class="d-inline">
-                            <input type="hidden" name="id_jeu" value="<?= htmlspecialchars($jeu['Id_jeu']) ?>">
-                            <button type="submit" class="btn btn-primary">
-                                <?= isset($_SESSION['user_id']) ? 'Ajouter ce jeu à votre collection' : 'Connectez-vous pour ajouter ce jeu à votre collection!' ?>
-                            </button>
-                        </form>
-
-
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <form action="/game-library/public/add-to-collection" method="POST" class="d-inline">
+                                <input type="hidden" name="id_jeu" value="<?= htmlspecialchars($jeu['Id_jeu']) ?>">
+                                <button type="submit" class="btn btn-primary">
+                                    Ajouter à ma collection
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <a href="/game-library/public/login" class="btn btn-secondary">Connectez-vous pour ajouter à votre collection</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
+
 
 <script>
     document.querySelectorAll('.game-card').forEach(card => {
