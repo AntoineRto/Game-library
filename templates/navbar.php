@@ -17,8 +17,8 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <!-- Logo -->
-        <a class="navbar-brand" href="/game-library/public/home.php">
-            <img src="../public/assets/img/controllerLogo.jpg" alt="Logo">
+        <a class="navbar-brand" href="/game-library/public/">
+            <img src="../public/assets/img/logolibrairie.png" alt="Logo">
         </a>
 
         <form id="searchForm" action="/game-library/public/search" method="GET" class="d-flex flex-grow-1 mx-3">
